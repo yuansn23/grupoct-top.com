@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Paradise - Best Betting Strategy</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            850: '#151f32',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        gold: {
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        /* Progress Bar Animation */
+        .progress-bar-fill {
+            width: 0;
+            transition: width 1.5s ease-out;
+        }
+
+        /* Button Breathing Animation */
+        @keyframes breathe {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(234, 179, 8, 0.4), 0 0 20px rgba(234, 179, 8, 0.2);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(234, 179, 8, 0.8), 0 0 40px rgba(234, 179, 8, 0.4), 0 0 60px rgba(234, 179, 8, 0.2);
+                transform: scale(1.02);
+            }
+        }
+
+        .btn-breathe {
+            animation: breathe 2s ease-in-out infinite;
+        }
+
+        .btn-breathe:hover {
+            animation: none;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(234, 179, 8, 0.9), 0 0 60px rgba(234, 179, 8, 0.5);
+        }
+
+        /* Secondary Button Breathing */
+        @keyframes breatheSecondary {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(100, 116, 139, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 15px rgba(234, 179, 8, 0.5), 0 0 30px rgba(234, 179, 8, 0.2);
+            }
+        }
+
+        .btn-breathe-secondary {
+            animation: breatheSecondary 2.5s ease-in-out infinite;
+        }
+
+        .btn-breathe-secondary:hover {
+            animation: none;
+        }
+
+        /* Floating Badge Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
+        }
+
+        .float-badge {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Sparkle Animation */
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        .sparkle {
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        /* Game Card Glow */
+        .game-card {
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, transparent, rgba(234, 179, 8, 0.3), transparent);
+            border-radius: 16px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .game-card:hover::before {
+            opacity: 1;
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        /* Countdown Pulse */
+        @keyframes countPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .count-pulse {
+            animation: countPulse 1s ease-in-out infinite;
+        }
+
+        /* Hot Badge */
+        @keyframes hotPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .hot-pulse {
+            animation: hotPulse 1.5s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 font-sans selection:bg-gold-500 selection:text-black">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 cursor-pointer" onclick="scrollToSection('home')">
+                    <img src="https://yuwe901d.site/game/img/logo.png" alt="Logo" class="h-14 md:h-12 w-auto object-contain">
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="text-gray-300 hover:text-gold-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="#game-center" class="text-gray-300 hover:text-gold-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Game Center</a>
+                        <a href="privacy.html" class="text-gray-300 hover:text-gold-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Privacy</a>
+                        <a href="terms.html" class="text-gray-300 hover:text-gold-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Terms</a>
+                       <!-- <a href="rtp-intro.html" class="text-gray-300 hover:text-gold-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">RTP Info</a> -->
+                        <a href="contact.html" class="text-gray-300 hover:text-gold-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact Us</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button onclick="toggleMenu()" class="text-gray-400 hover:text-white p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" onclick="toggleMenu()" class="text-gray-300 hover:text-gold-400 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#game-center" onclick="toggleMenu()" class="text-gray-300 hover:text-gold-400 block px-3 py-2 rounded-md text-base font-medium">Game Center</a>
+                <a href="#privacy" onclick="toggleMenu()" class="text-gray-300 hover:text-gold-400 block px-3 py-2 rounded-md text-base font-medium">Privacy</a>
+                <a href="#terms" onclick="toggleMenu()" class="text-gray-300 hover:text-gold-400 block px-3 py-2 rounded-md text-base font-medium">Terms</a>
+                <a href="#rtp-intro" onclick="toggleMenu()" class="text-gray-300 hover:text-gold-400 block px-3 py-2 rounded-md text-base font-medium">RTP Info</a>
+                <a href="#contact" onclick="toggleMenu()" class="text-gray-300 hover:text-gold-400 block px-3 py-2 rounded-md text-base font-medium">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-28 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-12 fade-in-up">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-4">
+                Welcome, Player! <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-gold-600">Find the Best Strategy</span>
+            </h1>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto mt-4">
+                Our RTP (Return to Player) data is calculated based on real-time betting records. The system continuously analyzes this data to ensure accuracy and live updates.
+            </p>
+        </div>
+
+        <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-800 bg-slate-900 group">
+            <img src="https://yuwe901d.site/game/img/1.png" alt="Hero Banner" class="w-full h-auto object-cover max-h-[500px] opacity-90 group-hover:opacity-100 transition-opacity duration-500">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-6 md:p-10">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">Rely on RTP Data</h2>
+                <p class="text-gray-300 mb-6 max-w-xl">Players can make smarter game choices, enhancing their betting experience and winning rate.</p>
+                <button onclick="k2()" class="btn-breathe bg-gold-500 hover:bg-gold-400 text-black font-bold py-3 px-8 rounded-full transition-all flex items-center gap-2 w-fit mx-auto md:mx-0">
+                    Check Latest Games <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Indicators -->
+    <section class="py-8 border-y border-slate-800 bg-slate-900/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="flex flex-col items-center">
+                    <div class="text-3xl md:text-4xl font-bold text-gold-500 mb-1">$50M+</div>
+                    <div class="text-sm text-gray-400">Paid to Players</div>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="text-3xl md:text-4xl font-bold text-gold-500 mb-1">500K+</div>
+                    <div class="text-sm text-gray-400">Active Users</div>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="text-3xl md:text-4xl font-bold text-gold-500 mb-1">98.7%</div>
+                    <div class="text-sm text-gray-400">Avg. RTP</div>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="text-3xl md:text-4xl font-bold text-gold-500 mb-1">24/7</div>
+                    <div class="text-sm text-gray-400">Live Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Center Grid -->
+    <section id="game-center" class="py-16 bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 bg-slate-800 px-4 py-2 rounded-full mb-4">
+                    <span class="w-2 h-2 bg-green-500 rounded-full count-pulse"></span>
+                    <span class="text-sm text-gray-300">Live Games Available</span>
+                </div>
+                <h2 class="text-3xl font-bold text-white mb-4">Our Goal</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Providing the latest game information to help you make smarter betting decisions and increase your winning rate.</p>
+            </div>
+
+            <!-- Enhanced Image Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <!-- Game Card 1 -->
+                <div onclick="k2()" class="game-card group relative rounded-xl overflow-hidden border border-slate-700 shadow-lg cursor-pointer bg-slate-800">
+                    <div class="p-3">
+                        <img src="https://yuwe901d.site/game/img/2.png" class="w-full h-auto object-contain rounded-lg transform group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="px-3 pb-3">
+                        <div class="flex items-center justify-center">
+                            <span class="text-xs text-gray-400"><i class="fas fa-users mr-1"></i>1.2K playing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Card 2 -->
+                <div onclick="k2()" class="game-card group relative rounded-xl overflow-hidden border border-slate-700 shadow-lg cursor-pointer bg-slate-800">
+                    <div class="p-3">
+                        <img src="https://yuwe901d.site/game/img/3.png" class="w-full h-auto object-contain rounded-lg transform group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="px-3 pb-3">
+                        <div class="flex items-center justify-center">
+                            <span class="text-xs text-gray-400"><i class="fas fa-users mr-1"></i>890 playing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Card 3 -->
+                <div onclick="k2()" class="game-card group relative rounded-xl overflow-hidden border border-slate-700 shadow-lg cursor-pointer bg-slate-800">
+                    <div class="p-3">
+                        <img src="https://yuwe901d.site/game/img/4.png" class="w-full h-auto object-contain rounded-lg transform group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="px-3 pb-3">
+                        <div class="flex items-center justify-center">
+                            <span class="text-xs text-gray-400"><i class="fas fa-users mr-1"></i>2.3K playing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Card 4 -->
+                <div onclick="k2()" class="game-card group relative rounded-xl overflow-hidden border border-slate-700 shadow-lg cursor-pointer bg-slate-800">
+                    <div class="p-3">
+                        <img src="https://yuwe901d.site/game/img/2.png" class="w-full h-auto object-contain rounded-lg transform group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="px-3 pb-3">
+                        <div class="flex items-center justify-center">
+                            <span class="text-xs text-gray-400"><i class="fas fa-users mr-1"></i>567 playing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Card 5 -->
+                <div onclick="k2()" class="game-card group relative rounded-xl overflow-hidden border border-slate-700 shadow-lg cursor-pointer bg-slate-800">
+                    <div class="p-3">
+                        <img src="https://yuwe901d.site/game/img/2.png" class="w-full h-auto object-contain rounded-lg transform group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="px-3 pb-3">
+                        <div class="flex items-center justify-center">
+                            <span class="text-xs text-gray-400"><i class="fas fa-users mr-1"></i>1.8K playing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Card 6 -->
+                <div onclick="k2()" class="game-card group relative rounded-xl overflow-hidden border border-slate-700 shadow-lg cursor-pointer bg-slate-800">
+                    <div class="p-3">
+                        <img src="https://yuwe901d.site/game/img/3.png" class="w-full h-auto object-contain rounded-lg transform group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="px-3 pb-3">
+                        <div class="flex items-center justify-center">
+                            <span class="text-xs text-gray-400"><i class="fas fa-users mr-1"></i>456 playing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Card 7 -->
+                <div onclick="k2()" class="game-card group relative rounded-xl overflow-hidden border border-slate-700 shadow-lg cursor-pointer bg-slate-800">
+                    <div class="p-3">
+                        <img src="https://yuwe901d.site/game/img/4.png" class="w-full h-auto object-contain rounded-lg transform group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="px-3 pb-3">
+                        <div class="flex items-center justify-center">
+                            <span class="text-xs text-gray-400"><i class="fas fa-users mr-1"></i>789 playing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Card 8 -->
+                <div onclick="k2()" class="game-card group relative rounded-xl overflow-hidden border border-slate-700 shadow-lg cursor-pointer bg-slate-800">
+                    <div class="p-3">
+                        <img src="https://yuwe901d.site/game/img/2.png" class="w-full h-auto object-contain rounded-lg transform group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="px-3 pb-3">
+                        <div class="flex items-center justify-center">
+                            <span class="text-xs text-gray-400"><i class="fas fa-users mr-1"></i>1.1K playing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Card 9 -->
+                <div onclick="k2()" class="game-card group relative rounded-xl overflow-hidden border border-slate-700 shadow-lg cursor-pointer bg-slate-800">
+                    <div class="p-3">
+                        <img src="https://yuwe901d.site/game/img/2.png" class="w-full h-auto object-contain rounded-lg transform group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="px-3 pb-3">
+                        <div class="flex items-center justify-center">
+                            <span class="text-xs text-gray-400"><i class="fas fa-users mr-1"></i>2.1K playing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Card 10 -->
+                <div onclick="k2()" class="game-card group relative rounded-xl overflow-hidden border border-slate-700 shadow-lg cursor-pointer bg-slate-800">
+                    <div class="p-3">
+                        <img src="https://yuwe901d.site/game/img/3.png" class="w-full h-auto object-contain rounded-lg transform group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="px-3 pb-3">
+                        <div class="flex items-center justify-center">
+                            <span class="text-xs text-gray-400"><i class="fas fa-users mr-1"></i>678 playing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Card 11 -->
+                <div onclick="k2()" class="game-card group relative rounded-xl overflow-hidden border border-slate-700 shadow-lg cursor-pointer bg-slate-800">
+                    <div class="p-3">
+                        <img src="https://yuwe901d.site/game/img/4.png" class="w-full h-auto object-contain rounded-lg transform group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="px-3 pb-3">
+                        <div class="flex items-center justify-center">
+                            <span class="text-xs text-gray-400"><i class="fas fa-users mr-1"></i>1.5K playing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Card 12 -->
+                <div onclick="k2()" class="game-card group relative rounded-xl overflow-hidden border border-slate-700 shadow-lg cursor-pointer bg-slate-800">
+                    <div class="p-3">
+                        <img src="https://yuwe901d.site/game/img/2.png" class="w-full h-auto object-contain rounded-lg transform group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="px-3 pb-3">
+                        <div class="flex items-center justify-center">
+                            <span class="text-xs text-gray-400"><i class="fas fa-users mr-1"></i>432 playing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <button onclick="k2()" class="btn-breathe bg-gradient-to-r from-gold-600 to-gold-500 hover:from-gold-500 hover:to-gold-400 text-black font-bold py-4 px-10 rounded-full text-lg transition-all">
+                    <i class="fas fa-gamepad mr-2"></i>Bet Now & Win Big Rewards
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Banner -->
+    <section class="py-10 bg-gradient-to-r from-slate-800/80 via-slate-900/80 to-slate-800/80 border-y border-slate-700/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="flex items-center gap-4">
+                    <div class="bg-gold-500/20 p-4 rounded-xl">
+                        <i class="fas fa-shield-alt text-2xl text-gold-500"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Secure & Trusted</h3>
+                        <p class="text-gray-400 text-sm">Licensed platform with SSL encryption</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="bg-gold-500/20 p-4 rounded-xl">
+                        <i class="fas fa-bolt text-2xl text-gold-500"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Instant Withdrawals</h3>
+                        <p class="text-gray-400 text-sm">Get your winnings within minutes</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="bg-gold-500/20 p-4 rounded-xl">
+                        <i class="fas fa-headset text-2xl text-gold-500"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white">24/7 Support</h3>
+                        <p class="text-gray-400 text-sm">Professional customer service team</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RTP Introduction -->
+    <section id="rtp-intro" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-slate-800/50 rounded-3xl p-8 md:p-12 border border-slate-700 backdrop-blur-sm">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="flex-1">
+                    <div class="inline-block bg-slate-700 p-3 rounded-xl mb-6 text-gold-500">
+                        <i class="fas fa-percent text-3xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-white mb-6">The Key to Winning</h2>
+                    <p class="text-gray-300 mb-4 leading-relaxed">
+                        RTP is a key indicator for evaluating a game's profitability potential. Understanding RTP helps players formulate better betting strategies. A higher RTP means higher returns for the player in the long run, while a lower RTP implies a lower probability of profit.
+                    </p>
+                    <p class="text-white font-semibold text-lg">
+                        By choosing games with higher RTP, players can increase their winning rate and maximize profit opportunities.
+                    </p>
+                </div>
+                <div class="flex-1 w-full">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-slate-900 p-6 rounded-2xl border border-slate-700 text-center">
+                            <div class="text-4xl font-bold text-green-400 mb-2">High</div>
+                            <div class="text-sm text-gray-400">RTP means more returns</div>
+                        </div>
+                        <div class="bg-slate-900 p-6 rounded-2xl border border-slate-700 text-center">
+                            <div class="text-4xl font-bold text-gold-500 mb-2">Win</div>
+                            <div class="text-sm text-gray-400">Maximize profit chance</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RTP Data Cards -->
+    <section class="py-16 bg-slate-900/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-white mb-4">Popular Game RTP Data</h2>
+            <p class="text-center text-gray-400 mb-12">Real-time data updated every minute</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="rtp-grid">
+                <!-- Card 1 -->
+                <div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 hover:border-gold-500/50 transition-colors shadow-lg rtp-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://yuwe901d.site/game/img/5.png" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded hot-pulse">
+                            <i class="fas fa-fire mr-1"></i>TRENDING
+                        </div>
+                        <div class="absolute top-2 right-2 bg-black/70 backdrop-blur px-2 py-1 rounded-md flex items-center gap-1">
+                            <i class="fas fa-star text-gold-400 text-xs"></i>
+                            <span class="text-xs font-bold text-white">5.0</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-white mb-4">Ganesha Fortune</h3>
+                        <div class="space-y-3">
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>RTP per Minute</span><span class="text-gold-400 font-bold">95%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="95%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Min Bet</span><span class="text-gold-400 font-bold">99%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="99%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Max Bet</span><span class="text-gold-400 font-bold">87%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="87%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Daily Average</span><span class="text-gold-400 font-bold">96%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="96%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Official RTP</span><span class="text-gold-400 font-bold">96%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="96%"></div></div></div>
+                        </div>
+                        <button onclick="k2()" class="btn-breathe-secondary w-full mt-4 bg-slate-700 hover:bg-gold-500 hover:text-black text-white font-medium py-2 rounded-lg transition-colors text-sm">Start Now</button>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 hover:border-gold-500/50 transition-colors shadow-lg rtp-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://yuwe901d.site/game/img/6.png" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-black/70 backdrop-blur px-2 py-1 rounded-md flex items-center gap-1">
+                            <i class="fas fa-star text-gold-400 text-xs"></i>
+                            <span class="text-xs font-bold text-white">5.0</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-white mb-4">Dragon's Gold</h3>
+                        <div class="space-y-3">
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>RTP per Minute</span><span class="text-gold-400 font-bold">95%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="95%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Min Bet</span><span class="text-gold-400 font-bold">99%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="99%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Max Bet</span><span class="text-gold-400 font-bold">87%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="87%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Daily Average</span><span class="text-gold-400 font-bold">96%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="96%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Official RTP</span><span class="text-gold-400 font-bold">96%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="96%"></div></div></div>
+                        </div>
+                        <button onclick="k2()" class="btn-breathe-secondary w-full mt-4 bg-slate-700 hover:bg-gold-500 hover:text-black text-white font-medium py-2 rounded-lg transition-colors text-sm">Start Now</button>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 hover:border-gold-500/50 transition-colors shadow-lg rtp-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://yuwe901d.site/game/img/7.png" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-2 left-2 bg-gold-500 text-black text-xs font-bold px-2 py-1 rounded">
+                            <i class="fas fa-crown mr-1"></i>TOP PICK
+                        </div>
+                        <div class="absolute top-2 right-2 bg-black/70 backdrop-blur px-2 py-1 rounded-md flex items-center gap-1">
+                            <i class="fas fa-star text-gold-400 text-xs"></i>
+                            <span class="text-xs font-bold text-white">5.0</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-white mb-4">Lucky Tiger</h3>
+                        <div class="space-y-3">
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>RTP per Minute</span><span class="text-gold-400 font-bold">95%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="95%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Min Bet</span><span class="text-gold-400 font-bold">99%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="99%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Max Bet</span><span class="text-gold-400 font-bold">87%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="87%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Daily Average</span><span class="text-gold-400 font-bold">96%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="96%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Official RTP</span><span class="text-gold-400 font-bold">96%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="96%"></div></div></div>
+                        </div>
+                        <button onclick="k2()" class="btn-breathe-secondary w-full mt-4 bg-slate-700 hover:bg-gold-500 hover:text-black text-white font-medium py-2 rounded-lg transition-colors text-sm">Start Now</button>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 hover:border-gold-500/50 transition-colors shadow-lg rtp-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://yuwe901d.site/game/img/8.png" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-black/70 backdrop-blur px-2 py-1 rounded-md flex items-center gap-1">
+                            <i class="fas fa-star text-gold-400 text-xs"></i>
+                            <span class="text-xs font-bold text-white">5.0</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-white mb-4">Phoenix Rise</h3>
+                        <div class="space-y-3">
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>RTP per Minute</span><span class="text-gold-400 font-bold">95%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="95%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Min Bet</span><span class="text-gold-400 font-bold">99%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="99%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Max Bet</span><span class="text-gold-400 font-bold">87%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="87%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Daily Average</span><span class="text-gold-400 font-bold">96%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="96%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Official RTP</span><span class="text-gold-400 font-bold">96%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="96%"></div></div></div>
+                        </div>
+                        <button onclick="k2()" class="btn-breathe-secondary w-full mt-4 bg-slate-700 hover:bg-gold-500 hover:text-black text-white font-medium py-2 rounded-lg transition-colors text-sm">Start Now</button>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 hover:border-gold-500/50 transition-colors shadow-lg rtp-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://yuwe901d.site/game/img/5.png" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-black/70 backdrop-blur px-2 py-1 rounded-md flex items-center gap-1">
+                            <i class="fas fa-star text-gold-400 text-xs"></i>
+                            <span class="text-xs font-bold text-white">5.0</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-white mb-4">Mega Fortune</h3>
+                        <div class="space-y-3">
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>RTP per Minute</span><span class="text-gold-400 font-bold">95%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="95%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Min Bet</span><span class="text-gold-400 font-bold">99%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="99%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Max Bet</span><span class="text-gold-400 font-bold">87%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="87%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Daily Average</span><span class="text-gold-400 font-bold">96%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="96%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Official RTP</span><span class="text-gold-400 font-bold">96%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="96%"></div></div></div>
+                        </div>
+                        <button onclick="k2()" class="btn-breathe-secondary w-full mt-4 bg-slate-700 hover:bg-gold-500 hover:text-black text-white font-medium py-2 rounded-lg transition-colors text-sm">Start Now</button>
+                    </div>
+                </div>
+                 <!-- Card 6 -->
+                 <div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 hover:border-gold-500/50 transition-colors shadow-lg rtp-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://yuwe901d.site/game/img/6.png" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-black/70 backdrop-blur px-2 py-1 rounded-md flex items-center gap-1">
+                            <i class="fas fa-star text-gold-400 text-xs"></i>
+                            <span class="text-xs font-bold text-white">5.0</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-white mb-4">Royal Jackpot</h3>
+                        <div class="space-y-3">
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>RTP per Minute</span><span class="text-gold-400 font-bold">95%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="95%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Min Bet</span><span class="text-gold-400 font-bold">99%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="99%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Max Bet</span><span class="text-gold-400 font-bold">87%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="87%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Daily Average</span><span class="text-gold-400 font-bold">96%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="96%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Official RTP</span><span class="text-gold-400 font-bold">96%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="96%"></div></div></div>
+                        </div>
+                        <button onclick="k2()" class="btn-breathe-secondary w-full mt-4 bg-slate-700 hover:bg-gold-500 hover:text-black text-white font-medium py-2 rounded-lg transition-colors text-sm">Start Now</button>
+                    </div>
+                </div>
+                 <!-- Card 7 -->
+                 <div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 hover:border-gold-500/50 transition-colors shadow-lg rtp-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://yuwe901d.site/game/img/7.png" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-black/70 backdrop-blur px-2 py-1 rounded-md flex items-center gap-1">
+                            <i class="fas fa-star text-gold-400 text-xs"></i>
+                            <span class="text-xs font-bold text-white">5.0</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-white mb-4">Diamond King</h3>
+                        <div class="space-y-3">
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>RTP per Minute</span><span class="text-gold-400 font-bold">95%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="95%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Min Bet</span><span class="text-gold-400 font-bold">99%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="99%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Max Bet</span><span class="text-gold-400 font-bold">87%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="87%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Daily Average</span><span class="text-gold-400 font-bold">96%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="96%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Official RTP</span><span class="text-gold-400 font-bold">96%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="96%"></div></div></div>
+                        </div>
+                        <button onclick="k2()" class="btn-breathe-secondary w-full mt-4 bg-slate-700 hover:bg-gold-500 hover:text-black text-white font-medium py-2 rounded-lg transition-colors text-sm">Start Now</button>
+                    </div>
+                </div>
+                 <!-- Card 8 -->
+                 <div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 hover:border-gold-500/50 transition-colors shadow-lg rtp-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://yuwe901d.site/game/img/8.png" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-black/70 backdrop-blur px-2 py-1 rounded-md flex items-center gap-1">
+                            <i class="fas fa-star text-gold-400 text-xs"></i>
+                            <span class="text-xs font-bold text-white">5.0</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-white mb-4">Thunder Zeus</h3>
+                        <div class="space-y-3">
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>RTP per Minute</span><span class="text-gold-400 font-bold">95%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="95%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Min Bet</span><span class="text-gold-400 font-bold">99%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="99%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Max Bet</span><span class="text-gold-400 font-bold">87%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="87%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Daily Average</span><span class="text-gold-400 font-bold">96%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="96%"></div></div></div>
+                            <div class="mb-2"><div class="flex justify-between text-xs text-gray-400 mb-1"><span>Official RTP</span><span class="text-gold-400 font-bold">96%</span></div><div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-600 to-gold-400 rounded-full progress-bar-fill" data-width="96%"></div></div></div>
+                        </div>
+                        <button onclick="k2()" class="btn-breathe-secondary w-full mt-4 bg-slate-700 hover:bg-gold-500 hover:text-black text-white font-medium py-2 rounded-lg transition-colors text-sm">Start Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center text-white mb-12">What Our Players Say</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Review 1 -->
+            <div class="bg-slate-800/40 p-8 rounded-2xl border border-slate-700/50 relative">
+                <div class="absolute -top-4 left-8 text-6xl text-gold-500/20 font-serif">"</div>
+                <p class="text-gray-300 italic mb-6 relative z-10">The RTP page is a game changer! It provides more options and enriches the gaming experience. I've seen my win rate improve significantly since using this data.</p>
+                <div class="flex items-center gap-3">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="w-12 h-12 rounded-full border-2 border-gold-500">
+                    <div>
+                        <div class="font-bold text-white">John D.</div>
+                        <span class="text-xs text-gold-500 font-bold uppercase tracking-wider">Slot Expert</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Review 2 -->
+            <div class="bg-slate-800/40 p-8 rounded-2xl border border-slate-700/50 relative">
+                <div class="absolute -top-4 left-8 text-6xl text-gold-500/20 font-serif">"</div>
+                <p class="text-gray-300 italic mb-6 relative z-10">Great user experience and highly recommended. The innovative services make this platform stand out from the rest. My clients love it.</p>
+                <div class="flex items-center gap-3">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="w-12 h-12 rounded-full border-2 border-gold-500">
+                    <div>
+                        <div class="font-bold text-white">Sarah M.</div>
+                        <span class="text-xs text-gold-500 font-bold uppercase tracking-wider">VIP Agent</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Review 3 -->
+            <div class="bg-slate-800/40 p-8 rounded-2xl border border-slate-700/50 relative">
+                <div class="absolute -top-4 left-8 text-6xl text-gold-500/20 font-serif">"</div>
+                <p class="text-gray-300 italic mb-6 relative z-10">I've been playing here for years. The quality and innovation always impress me. The team keeps improving, and the game variety is huge. 10/10!</p>
+                <div class="flex items-center gap-3">
+                    <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="User" class="w-12 h-12 rounded-full border-2 border-gold-500">
+                    <div>
+                        <div class="font-bold text-white">Michael T.</div>
+                        <span class="text-xs text-gold-500 font-bold uppercase tracking-wider">Long-term Player</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-slate-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Win Big?</h2>
+            <p class="text-gray-400 mb-8">Join 500K+ players and start winning today!</p>
+            <button onclick="k2()" class="btn-breathe bg-gold-500 hover:bg-gold-400 text-black font-bold py-4 px-12 rounded-full text-xl mb-16 transition-all">
+                <i class="fas fa-rocket mr-2"></i>Register Now & Start Playing
+            </button>
+
+            <!-- Footer Links -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-slate-800 pt-8 text-left">
+                <div id="privacy">
+                    <h4 class="text-white font-bold mb-4 flex items-center gap-2"><i class="fas fa-shield-alt"></i> Privacy Policy</h4>
+                    <p class="text-gray-500 text-sm">We protect your personal information. We use state-of-the-art encryption technology to ensure your data is safe.</p>
+                </div>
+                <div id="terms">
+                    <h4 class="text-white font-bold mb-4 flex items-center gap-2"><i class="fas fa-file-contract"></i> Terms of Service</h4>
+                    <p class="text-gray-500 text-sm">By using this website, you agree to our terms of service. Please ensure you are over 18 years of age.</p>
+                </div>
+                <div id="contact">
+                    <h4 class="text-white font-bold mb-4 flex items-center gap-2"><i class="fas fa-headset"></i> Contact Us</h4>
+                    <p class="text-gray-500 text-sm">If you have any questions, please contact our 24/7 customer support team.</p>
+                </div>
+            </div>
+
+            <div class="mt-12 text-gray-600 text-sm">
+                © 2024 Game Paradise. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // K2 Redirect Function
+        function k2() {
+            window.location.href = 'https://www.qq.com';
+        }
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Smooth Scroll
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                // Close mobile menu if open
+                const menu = document.getElementById('mobile-menu');
+                if (!menu.classList.contains('hidden')) {
+                    menu.classList.add('hidden');
+                }
+            }
+        }
+
+        // Progress Bar Animation Observer
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const bars = entry.target.querySelectorAll('.progress-bar-fill');
+                        bars.forEach(bar => {
+                            const width = bar.getAttribute('data-width');
+                            bar.style.width = width;
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const cards = document.querySelectorAll('.rtp-card');
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
